@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import Text from "../../components/CustomText";
 
 export default function ResultScreen({ navigate, result }) {
   const { score, total, percentage, category } = result || { score: 0, total: 5, percentage: 0, category: 'Quiz' };

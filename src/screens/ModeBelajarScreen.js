@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  Text,
   Image,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
   ActivityIndicator,
 } from "react-native";
+import Text from "../components/CustomText";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Constants from "expo-constants";
 import { supabase } from "../lib/supabase"; // sesuaikan path

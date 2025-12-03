@@ -20,10 +20,15 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["CAMERA"],
+      "permissions": [
+        "CAMERA"
+      ],
       "edgeToEdgeEnabled": true
     },
-    "plugins": ["expo-camera"],
+    "plugins": [
+      "expo-camera",
+      "expo-font"
+    ],
     "web": {
       "favicon": "./assets/favicon.png"
     }

@@ -1,27 +1,23 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
+import Text from "../../components/CustomText";
 
 export default function MenuKategoriScreen({ navigate }) {
   return (
     <View style={styles.container}>
 
-      {/* HEADER */}
+      {/* HEADER - SAMA KAYAK MODE BELAJAR */}
       <View style={styles.header}>
-
-        {/* Left empty (flex 1) */}
-        <View style={styles.headerSide} />
-
-        {/* Title */}
         <Text style={styles.headerTitle}>Quiz</Text>
-
-        {/* Right empty (flex 1) */}
-        <View style={styles.headerSide} />
-
       </View>
 
       {/* CONTENT */}
-      <View style={styles.content}>
+      <ScrollView 
+        style={styles.scrollView}
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.iconContainer}>
           <Image 
             source={require('../../../assets/images/logo.png')}
@@ -52,7 +48,7 @@ export default function MenuKategoriScreen({ navigate }) {
             <Text style={styles.menuButtonText}>Klasifikasi Hardware</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
 
     </View>
   );
@@ -65,35 +61,31 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 
+  // HEADER BARU - SAMA PERSIS KAYAK MODE BELAJAR
   header: {
     backgroundColor: "#88A2FF",
+    height: 110,
     paddingTop: Constants.statusBarHeight + 10,
-    paddingBottom: 15,
-    paddingHorizontal: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-
-  /* Kolom kiri & kanan kosong */
-  headerSide: {
-    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
 
   headerTitle: {
-    flex: 1,
-    fontSize: 20,
-    fontWeight: '600',
+    fontSize: 22,
+    fontFamily: 'Poppins_700Bold', // Ganti fontWeight jadi ini
     color: '#FFFFFF',
-    textAlign: 'center',
+  },
+
+  scrollView: {
+    flex: 1,
   },
 
   content: {
-    flex: 1,
     paddingHorizontal: 25,
     paddingTop: 30,
-    paddingBottom: 20,
-    justifyContent: 'space-between',
+    paddingBottom: 40,
   },
 
   iconContainer: {
@@ -103,13 +95,12 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    width: 200,
-    height: 250,
+    width: 150,
+    height: 200,
   },
 
   menuContainer: {
     gap: 20,
-    paddingBottom: 250,
   },
 
   menuButton: {
@@ -137,8 +128,8 @@ const styles = StyleSheet.create({
   },
 
   menuButtonText: {
-    fontSize: 17,
-    fontWeight: '700',
+    fontSize: 15,
+    fontFamily: 'Poppins_700Bold',
     color: '#2B2B2B',
   },
 });

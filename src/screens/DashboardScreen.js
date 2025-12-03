@@ -3,12 +3,12 @@
 import React from "react";
 import { 
   View, 
-  Text, 
   ScrollView, 
   TouchableOpacity, 
   StyleSheet,
   SafeAreaView
 } from "react-native";
+import Text from "../components/CustomText";
 
 export default function DashboardScreen({ navigation, user, onTabChange }) {
 
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   },
   headerContent: { flexDirection: "row", alignItems: "center", gap: 16 },
   avatar: { width: 64, height: 64, backgroundColor: "#d1d5db", borderRadius: 16 },
-  headerText: { color: "white", fontSize: 24, fontWeight: "bold" },
+  headerText: { color: "white", fontSize: 22, fontWeight: "bold" },
   scrollView: { flex: 1 },
   contentContainer: { padding: 24, paddingBottom: 100 },
   featureCard: {
@@ -124,21 +124,22 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   cardContent: { flexDirection: "row", gap: 20 },
-  iconText: { fontSize: 48 },
+  iconText: { fontSize: 40 },
   cardTextContainer: { flex: 1 },
-  cardTitle: { fontSize: 24, fontWeight: "bold", color: "#1f2937" },
+  cardTitle: { fontSize: 20, fontWeight: "bold", color: "#1f2937" },
   cardDescription: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#4b5563",
     marginBottom: 16,
     lineHeight: 20,
   },
   button: {
     backgroundColor: "#1f2937",
-    paddingVertical: 12,
+    paddingVertical: 8,
     paddingHorizontal: 32,
     borderRadius: 12,
     alignSelf: "flex-start",
+    height: 35,
   },
-  buttonText: { color: "white", fontSize: 16, fontWeight: "600" },
+  buttonText: { color: "white", fontSize: 12, fontWeight: "600" },
 });

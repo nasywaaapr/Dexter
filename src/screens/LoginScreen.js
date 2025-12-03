@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
   TextInput,
   TouchableOpacity,
   Image,
@@ -10,6 +9,7 @@ import {
   ActivityIndicator,
   Alert,
 } from "react-native";
+import Text from "../components/CustomText";
 import { createUser } from '../services/supabaseService';
 export default function LoginScreen({ onLogin }) {
   const [name, setName] = useState("");

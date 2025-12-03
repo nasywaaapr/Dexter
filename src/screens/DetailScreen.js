@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  Text,
   Image,
   StyleSheet,
   ScrollView,
@@ -9,6 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import Constants from "expo-constants";
+import Text from "../components/CustomText";
 import { supabase } from "../lib/supabase";
 
 export default function Detail({ route, navigation }) {

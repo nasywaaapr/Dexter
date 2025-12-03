@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Constants from 'expo-constants';
+import Text from "../../components/CustomText";
 
 const quizData = [
   {
@@ -61,6 +64,7 @@ const quizData = [
 ];
 
 export default function QuizTebakFungsiScreen({ navigate }) {
+  const insets = useSafeAreaInsets();
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answersState, setAnswersState] = useState(
@@ -127,17 +131,19 @@ export default function QuizTebakFungsiScreen({ navigate }) {
   return (
     <View style={styles.container}>
 
+      {/* HEADER - SAMA KAYAK QUIZ LAINNYA */}
       <View style={styles.header}>
         <TouchableOpacity onPress={handleBackToMenu} style={styles.headerBackBtn}>
           <Ionicons name="chevron-back" size={28} color="#fff" />
         </TouchableOpacity>
 
-        <View style={styles.headerCenter}>
-          <Text style={styles.headerTitle}>Quiz Tebak Fungsi</Text>
-        </View>
+        <Text style={styles.headerTitle}>Quiz Tebak Fungsi</Text>
       </View>
 
-      <ScrollView style={styles.scrollContent}>
+      <ScrollView 
+        style={styles.scrollContent}
+        contentContainerStyle={{ paddingBottom: insets.bottom + 20 }}
+      >
         <View style={styles.content}>
 
           {/* PROGRESS BAR */}
@@ -179,7 +185,8 @@ export default function QuizTebakFungsiScreen({ navigate }) {
         </View>
       </ScrollView>
 
-      <View style={styles.buttonContainer}>
+      {/* BUTTON CONTAINER - TAMBAH SAFEAREA */}
+      <View style={[styles.buttonContainer, { paddingBottom: insets.bottom + 20 }]}>
 
         {currentQuestion > 0 && (
           <TouchableOpacity 
@@ -212,32 +219,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 
+  // HEADER BARU - SAMA KAYAK QUIZ LAINNYA
   header: {
     backgroundColor: '#88A2FF',
-    paddingTop: 40, 
-    paddingBottom: 20,
+    height: 110,
+    paddingTop: Constants.statusBarHeight + 10,
     paddingHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
     position: 'relative',
   },
 
   headerBackBtn: {
     position: 'absolute',
-    left: 15,
-    top: 40,
-  },
-
-  headerCenter: {
-    flex: 1,
-    alignItems: 'center',
+    left: 20,
+    top: Constants.statusBarHeight + 28,
   },
 
   headerTitle: {
     color: '#FFFFFF',
-    fontSize: 20,
-    fontWeight: '700',
+    fontSize: 16,
+    fontFamily: 'Poppins_600SemiBold',
   },
 
   scrollContent: { flex: 1 },
@@ -271,7 +276,7 @@ const styles = StyleSheet.create({
   progressText: {
     color: '#2B4C7E',
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: 'Poppins_600SemiBold',
   },
 
   questionContainer: {
@@ -284,8 +289,8 @@ const styles = StyleSheet.create({
 
   questionText: {
     color: '#2B4C7E',
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 16,
+    fontFamily: 'Poppins_600SemiBold',
     textAlign: 'center',
   },
 
@@ -314,17 +319,16 @@ const styles = StyleSheet.create({
   },
 
   optionLabel: {
-    fontSize: 15,
+    fontSize: 14,
     color: '#2B4C7E',
-    fontWeight: '500',
+    fontFamily: 'Poppins_500Medium',
   },
 
   buttonContainer: {
     flexDirection: 'row',
     gap: 12,
     paddingHorizontal: 20,
-    paddingVertical: 20,
-    paddingBottom: 25,
+    paddingTop: 20,
     borderTopWidth: 1,
     borderTopColor: '#E5E7EB',
   },
@@ -339,8 +343,8 @@ const styles = StyleSheet.create({
 
   backButtonText: {
     color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 14,
+    fontFamily: 'Poppins_600SemiBold',
   },
 
   nextButton: {
@@ -353,8 +357,8 @@ const styles = StyleSheet.create({
 
   nextButtonText: {
     color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 14,
+    fontFamily: 'Poppins_600SemiBold',
   },
 
   disabledButton: {

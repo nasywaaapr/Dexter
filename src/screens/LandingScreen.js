@@ -1,14 +1,14 @@
 // src/screens/LandingScreen.js
 import React, { useState, useRef, useEffect } from 'react';
 import { 
-  View, 
-  Text, 
+  View,  
   Image, 
   TouchableOpacity, 
   Dimensions, 
   ScrollView, 
   StyleSheet 
 } from 'react-native';
+import Text from "../components/CustomText";
 
 const { width } = Dimensions.get('window');
 

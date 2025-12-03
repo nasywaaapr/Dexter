@@ -1,23 +1,61 @@
-import React from "react";
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import Constants from "expo-constants";
-import { detailData } from "../lib/detailData";
+import { supabase } from "../lib/supabase";
 
 export default function Detail({ route, navigation }) {
   const { id } = route.params;
-  const data = detailData[id];
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Mapping image secara static
-  const imageMap = {
-    computer: require("../../assets/images/computer.png"),
-    mouse: require("../../assets/images/mouse.png"),
-    CPU: require("../../assets/images/cpu.png"),
-    Headset: require("../../assets/images/headset.png"),
-    SSD: require("../../assets/images/ssd.png"),
-    Keyboard: require("../../assets/images/keyboard.png"),
-    Proyektor: require("../../assets/images/proyektor.png"),
-    Printer: require("../../assets/images/printer.png"),
+
+  useEffect(() => {
+    fetchDetail();
+  }, [id]);
+
+  const fetchDetail = async () => {
+    try {
+      const { data: result, error } = await supabase
+        .from("materi_belajar")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (error) throw error;
+
+      setData(result);
+    } catch (error) {
+      console.error("Error fetching detail:", error);
+      alert("Gagal memuat detail materi");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (loading) {
+    return (
+      <View style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
+        <ActivityIndicator size="large" color="#88A2FF" />
+        <Text style={{ marginTop: 10 }}>Memuat detail...</Text>
+      </View>
+    );
+  }
+
+  if (!data) {
+    return (
+      <View style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
+        <Text>Data tidak ditemukan</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -29,7 +67,7 @@ export default function Detail({ route, navigation }) {
         <Text style={styles.title}>Mode Belajar</Text>
       </View>
 
-      <ScrollView 
+      <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -37,8 +75,13 @@ export default function Detail({ route, navigation }) {
         <View style={styles.box}>
           <Text style={styles.detailTitle}>Informasi Detail</Text>
 
-          <Image source={imageMap[id]} style={styles.detailImg} resizeMode="contain" />
-          <Text style={{ textAlign: "center", marginBottom: 20 }}>{id}</Text>
+          <Image
+  source={{ uri: data.image_url }}
+  style={styles.detailImg}
+  resizeMode="contain"
+/>
+
+          <Text style={{ textAlign: "center", marginBottom: 20 }}>{data.label}</Text>
 
           {/* PENGERTIAN */}
           <View style={[styles.section, { backgroundColor: "#DDEBFF" }]}>

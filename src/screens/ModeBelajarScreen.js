@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,27 +6,50 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Constants from "expo-constants";
+import { supabase } from "../lib/supabase"; // sesuaikan path
 
 export default function ModeBelajarScreen({ navigation }) {
   const insets = useSafeAreaInsets();
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const items = [
-    { label: "computer", color: "#88A2FF", img: require("../../assets/images/computer.png"), textColor: "#fff" },
-    { label: "mouse", color: "#2B438D", img: require("../../assets/images/mouse.png"), textColor: "#fff" },
-    { label: "CPU", color: "#2B438D", img: require("../../assets/images/cpu.png"), textColor: "#fff" },
-    { label: "Headset", color: "#FFBCF9", img: require("../../assets/images/headset.png"), textColor: "#fff" },
-    { label: "SSD", color: "#88A2FF", img: require("../../assets/images/ssd.png"), textColor: "#fff" },
-    { label: "Keyboard", color: "#2B438D", img: require("../../assets/images/keyboard.png"), textColor: "#fff" },
-    { label: "Proyektor", color: "#2B438D", img: require("../../assets/images/proyektor.png"), textColor: "#fff" },
-    { label: "Printer", color: "#FFBCF9", img: require("../../assets/images/printer.png"), textColor: "#fff" }
-  ];
+  useEffect(() => {
+    fetchMateri();
+  }, []);
+
+  const fetchMateri = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("materi_belajar")
+        .select("*")
+        .order("urutan", { ascending: true });
+
+      if (error) throw error;
+
+      setItems(data || []);
+    } catch (error) {
+      console.error("Error fetching materi:", error);
+      alert("Gagal memuat data materi");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <View style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
+        <ActivityIndicator size="large" color="#88A2FF" />
+        <Text style={{ marginTop: 10 }}>Memuat materi...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
-      
       {/* HEADER */}
       <View style={[styles.header, { paddingTop: Constants.statusBarHeight + 10 }]}>
         <Text style={styles.title}>Mode Belajar</Text>
@@ -37,31 +60,34 @@ export default function ModeBelajarScreen({ navigation }) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
           styles.grid,
-          { paddingBottom: insets.bottom + 120 } // 🔥 agar tidak ketutup navbar
+          { paddingBottom: insets.bottom + 120 }
         ]}
       >
-        {items.map((item, index) => (
+        {items.map((item) => (
           <TouchableOpacity
-            key={index}
+            key={item.id}
             style={[styles.card, { backgroundColor: item.color }]}
-            onPress={() => navigation.navigate("Detail", { id: item.label })}
+            onPress={() => navigation.navigate("Detail", { id: item.id })}
             activeOpacity={0.8}
           >
-            <Image source={item.img} style={styles.image} resizeMode="contain" />
-            <Text style={[styles.label, { color: item.textColor }]}>
+            <Image
+              source={{ uri: item.image_url }}
+              style={styles.image}
+              resizeMode="contain"
+            />
+
+            <Text style={[styles.label, { color: item.text_color }]}>
               {item.label}
             </Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
-
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff" },
-
   header: {
     backgroundColor: "#88A2FF",
     height: 110,
@@ -70,20 +96,17 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
-
   title: {
     fontSize: 22,
     fontWeight: "bold",
     color: "#fff",
   },
-
   grid: {
     padding: 20,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
   },
-
   card: {
     width: "47%",
     height: 150,
@@ -97,8 +120,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowRadius: 6,
   },
-
   image: { width: 70, height: 70, marginBottom: 12 },
-
   label: { fontSize: 16, fontWeight: "700", textTransform: "capitalize" },
 });

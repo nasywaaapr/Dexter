@@ -9,6 +9,7 @@ import LoginScreen from "./src/screens/LoginScreen";
 import MainScreen from "./src/screens/MainScreen";
 import ModeBelajarScreen from "./src/screens/ModeBelajarScreen";
 import DetailScreen from "./src/screens/DetailScreen";
+import DetectionScreen from "./src/screens/DetectionScreen";
 
 
 const Stack = createStackNavigator();
@@ -39,6 +40,8 @@ export default function App() {
         </Stack.Screen>
         <Stack.Screen name="ModeBelajar" component={ModeBelajarScreen} />
         <Stack.Screen name="Detail" component={DetailScreen} />
+        <Stack.Screen name="DetectionScreen" component={DetectionScreen} options={{ headerShown: false }}
+/>
         {/* Nanti bisa tambah screen lain di sini */}
       </Stack.Navigator>
     </NavigationContainer>

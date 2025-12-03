@@ -13,6 +13,7 @@ import ProfileScreen from './ProfileScreen';
 
 export default function MainScreen({ user, navigation }) {
   const [activeTab, setActiveTab] = useState("Home");
+  const [showNavbar, setShowNavbar] = useState(true);
 
   // Render konten sesuai tab aktif
   const renderContent = () => {
@@ -22,7 +23,7 @@ export default function MainScreen({ user, navigation }) {
           <DashboardScreen 
             user={user} 
             navigation={navigation} 
-            onTabChange={setActiveTab}  // 🔥 Tambahkan ini!
+            onTabChange={setActiveTab}
           />
         );
         
@@ -30,10 +31,15 @@ export default function MainScreen({ user, navigation }) {
         return <ModeBelajarScreen navigation={navigation} />;
       
       case "Deteksi":
-        return <DetectionScreen navigation={navigation} />;
+        return <DetectionScreen navigation={navigation} onTabChange={setActiveTab} />;
       
       case "Quiz":
-        return <QuizScreen navigation={navigation} />;
+        return (
+          <QuizScreen 
+            navigation={navigation} 
+            onNavbarVisibilityChange={setShowNavbar}
+          />
+        );
       
       case "Profile":
         return <ProfileScreen user={user} navigation={navigation} />;
@@ -54,11 +60,13 @@ export default function MainScreen({ user, navigation }) {
       {/* Konten sesuai tab aktif */}
       {renderContent()}
 
-      {/* Navbar di bawah */}
-      <BottomNavbar 
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-      />
+      {/* Navbar - Sembunyikan saat di DetectionScreen atau Quiz tertentu */}
+      {activeTab !== "Deteksi" && showNavbar && (
+        <BottomNavbar 
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+        />
+      )}
     </View>
   );
 }

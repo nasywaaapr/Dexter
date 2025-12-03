@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 import SplashScreen from "./src/screens/SplashScreen";
 import LandingScreen from "./src/screens/LandingScreen";
 import LoginScreen from "./src/screens/LoginScreen";
+import DashboardApp from "./src/screens/DashboardScreen";
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -26,23 +27,7 @@ export default function App() {
   }
 
   // 4. Setelah login berhasil
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>✅ Login Berhasil!</Text>
-      <Text style={styles.welcome}>Selamat datang, {user.name}! 👋</Text>
-      <View style={styles.infoBox}>
-        <Text style={styles.infoLabel}>User ID:</Text>
-        <Text style={styles.infoValue}>{user.id}</Text>
-        <Text style={styles.infoLabel}>Dibuat:</Text>
-        <Text style={styles.infoValue}>
-          {new Date(user.created_at).toLocaleString('id-ID')}
-        </Text>
-      </View>
-      <Text style={styles.success}>
-        🎉 Data berhasil disimpan ke Supabase!
-      </Text>
-    </View>
-  );
+  return <DashboardApp user={user} />;
 }
 
 const styles = StyleSheet.create({

@@ -10,6 +10,7 @@ import ModeBelajarScreen from './ModeBelajarScreen';
 import DetectionScreen from './DetectionScreen';
 import QuizScreen from './QuizScreen';
 import ProfileScreen from './ProfileScreen';
+import RiwayatScreen from './RiwayatScreen';
 
 export default function MainScreen({ user, navigation }) {
   const [activeTab, setActiveTab] = useState("Home");
@@ -40,6 +41,9 @@ export default function MainScreen({ user, navigation }) {
             onNavbarVisibilityChange={setShowNavbar}
           />
         );
+        
+      case "Riwayat": 
+        return <RiwayatScreen navigation={navigation} />;
       
       case "Profile":
         return <ProfileScreen user={user} navigation={navigation} />;

@@ -9,6 +9,7 @@ import {
   SafeAreaView
 } from "react-native";
 import Text from "../components/CustomText";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 export default function DashboardScreen({ navigation, user, onTabChange }) {
 
@@ -107,7 +108,7 @@ export default function DashboardScreen({ navigation, user, onTabChange }) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f9fafb" },
   header: {
-    backgroundColor: "#818cf8",
+    backgroundColor: "#88A2FF",
     paddingHorizontal: 24,
     paddingVertical: 24,
     borderBottomLeftRadius: 24,

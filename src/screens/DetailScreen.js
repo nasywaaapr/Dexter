@@ -10,6 +10,7 @@ import {
 import Constants from "expo-constants";
 import Text from "../components/CustomText";
 import { supabase } from "../lib/supabase";
+import { saveToHistory } from "../utils/historyHelper";
 
 export default function Detail({ route, navigation }) {
   const { id } = route.params;
@@ -32,6 +33,9 @@ export default function Detail({ route, navigation }) {
       if (error) throw error;
 
       setData(result);
+      if (result) {
+        await saveToHistory(result);
+      }
     } catch (error) {
       console.error("Error fetching detail:", error);
       alert("Gagal memuat detail materi");

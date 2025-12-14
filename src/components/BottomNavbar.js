@@ -12,7 +12,7 @@ export default function BottomNavbar({ activeTab, onTabChange }) {
     { id: 'Belajar', icon: 'book-outline', iconActive: 'book' },
     { id: 'Deteksi', icon: 'scan', iconActive: 'scan' },
     { id: 'Quiz', icon: 'brain', iconActive: 'brain' },
-    { id: 'Profile', icon: 'person-outline', iconActive: 'person' },
+    { id: 'Riwayat', icon: 'document-text-outline', iconActive: 'document-text' }
   ];
 
   return (

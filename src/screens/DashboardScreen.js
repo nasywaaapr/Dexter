@@ -1,14 +1,15 @@
 // src/screens/DashboardScreen.js
-// src/screens/DashboardScreen.js
 import React from "react";
 import { 
   View, 
   ScrollView, 
   TouchableOpacity, 
   StyleSheet,
-  SafeAreaView
+  SafeAreaView,
+  Image
 } from "react-native";
 import Text from "../components/CustomText";
+import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 export default function DashboardScreen({ navigation, user, onTabChange }) {
@@ -20,7 +21,8 @@ export default function DashboardScreen({ navigation, user, onTabChange }) {
       description:
         "Gunakan camera untuk mendeteksi komponen hardware secara real-time dengan AI",
       bgColor: "#E8FD94",
-      icon: "📷",
+      icon: "scan",
+      iconType: "ionicons",
     },
     {
       id: "belajar",
@@ -28,7 +30,8 @@ export default function DashboardScreen({ navigation, user, onTabChange }) {
       description:
         "Akses semua Materi Pembelajaran tentang komponen hardware.",
       bgColor: "#B5A8FF",
-      icon: "📚",
+      icon: "book",
+      iconType: "ionicons",
     },
     {
       id: "quiz",
@@ -36,7 +39,8 @@ export default function DashboardScreen({ navigation, user, onTabChange }) {
       description:
         "Uji pemahaman Anda dengan kuis interaktif dan mendapatkan skor",
       bgColor: "#FFBCF9",
-      icon: "🧠",
+      icon: "brain",
+      iconType: "material",
     },
   ];
 
@@ -57,7 +61,11 @@ export default function DashboardScreen({ navigation, user, onTabChange }) {
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerContent}>
-          <View style={styles.avatar} />
+          <Image 
+            source={require('../../assets/images/logo.png')} 
+            style={styles.logo}
+            resizeMode="contain"
+          />
           <Text style={styles.headerText}>
             Hi, {user ? user.name : "User"}
           </Text>
@@ -77,7 +85,21 @@ export default function DashboardScreen({ navigation, user, onTabChange }) {
             onPress={() => goToPage(feature.id)}
           >
             <View style={styles.cardContent}>
-              <Text style={styles.iconText}>{feature.icon}</Text>
+              <View style={styles.iconContainer}>
+                {feature.iconType === "material" ? (
+                  <MaterialCommunityIcons 
+                    name={feature.icon} 
+                    size={40} 
+                    color="#1f2937" 
+                  />
+                ) : (
+                  <Ionicons 
+                    name={feature.icon} 
+                    size={40} 
+                    color="#1f2937" 
+                  />
+                )}
+              </View>
 
               <View style={styles.cardTextContainer}>
                 <Text style={styles.cardTitle}>{feature.title}</Text>
@@ -115,7 +137,11 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 24,
   },
   headerContent: { flexDirection: "row", alignItems: "center", gap: 16 },
-  avatar: { width: 64, height: 64, backgroundColor: "#d1d5db", borderRadius: 16 },
+  logo: { 
+    width: 64, 
+    height: 64, 
+    borderRadius: 16 
+  },
   headerText: { color: "white", fontSize: 22, fontWeight: "bold" },
   scrollView: { flex: 1 },
   contentContainer: { padding: 24, paddingBottom: 100 },
@@ -125,7 +151,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   cardContent: { flexDirection: "row", gap: 20 },
-  iconText: { fontSize: 40 },
+  iconContainer: { 
+    justifyContent: "center", 
+    alignItems: "center",
+    width: 50,
+  },
   cardTextContainer: { flex: 1 },
   cardTitle: { fontSize: 20, fontWeight: "bold", color: "#1f2937" },
   cardDescription: {

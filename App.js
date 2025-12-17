@@ -1,8 +1,12 @@
 // App.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, TextInput } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+
+// TensorFlow
+import * as tf from '@tensorflow/tfjs';
+import '@tensorflow/tfjs-react-native';
 
 // Screens
 import SplashScreen from "./src/screens/SplashScreen";
@@ -28,6 +32,7 @@ export default function App() {
   const [showSplash, setShowSplash] = useState(true);
   const [showLanding, setShowLanding] = useState(true);
   const [user, setUser] = useState(null);
+  const [tfReady, setTfReady] = useState(false);
 
   // Load fonts
   const [fontsLoaded] = useFonts({
@@ -36,6 +41,21 @@ export default function App() {
     Poppins_600SemiBold,
     Poppins_700Bold,
   });
+
+  // Initialize TensorFlow
+  useEffect(() => {
+    async function initTF() {
+      try {
+        await tf.ready();
+        console.log('✅ TensorFlow.js ready');
+        console.log('Backend:', tf.getBackend());
+        setTfReady(true);
+      } catch (error) {
+        console.error('❌ Error initializing TensorFlow:', error);
+      }
+    }
+    initTF();
+  }, []);
 
   if (!fontsLoaded) return null;
 
